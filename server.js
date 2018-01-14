@@ -21,7 +21,7 @@ const start = (options) => {
         app.use(morgan('dev'));
         app.use(helmet());
         app.use( (err, req, next) => {
-            reject(new Error(`Something went wrong!, err: ${err}`);
+            reject(new Error(`Something went wrong!, err: ${err}`));
             res.status(500).send('Something went wrong');
         });
 
