@@ -20,28 +20,27 @@ const repository = (db) => {
                 releaseDay: {
                     $lte: currentDay.getDay()
                 }
-            }
+            };
 
             const cursor = collection.find(query);
 
             const addMovies = (movie) => {
-                movies.push(movie)
-            }
+                movies.push(movie);
+            };
 
-            const sendMovies = (err) {
+            const sendMovies = (err) => {
                 if (err) {
                     reject(new Error(`An error occured fetching all movies, err: ${err}`))
                 }
 
                 resolve(movies)
-            }
+            };
 
             cursor.forEach(addMovies, sendMovies)
-
-        })
+        });
     };
 
-    const getMovieById = (id) {
+    const getMovieById = (id) => {
         return new Promise( (resolve, reject) => {
             const projection = { _id: 0, id: 1, title: 1, format: 1 };
             const sendMovie = (err, movie) => {
@@ -66,14 +65,14 @@ const repository = (db) => {
         getMovieById,
         disconnect
     });
+}
 
-    const connect = (connection) => {
-        return new Promise( (resolve, reject) => {
-            reject(new Error(`Connection db not supplied`));
-        })
+const connect = (connection) => {
+    return new Promise( (resolve, reject) => {
+        reject(new Error(`Connection db not supplied`));
+    })
 
-        resolve(repository(connection))
-    }
+    resolve(repository(connection))
 }
 
 module.exports = Object.assign({}, {connect});
